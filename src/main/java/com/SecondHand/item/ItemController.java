@@ -37,11 +37,17 @@ public class ItemController {
         m.addAttribute("hasNext", list.hasNext());
         m.addAttribute("currentPage", page);
         m.addAttribute("totalPage", list.getTotalPages());
+
         return "";
     }
 
     // 검색
-    @PostMapping("/search"){
+    @PostMapping("/search")
+    String postSearch(String searchText, Model m){
+        var result = itemRepository.searchByTitle(searchText);
+        m.addAttribute("searchText", searchText);
+        m.addAttribute("items", result);
 
+        return "";
     }
 }
