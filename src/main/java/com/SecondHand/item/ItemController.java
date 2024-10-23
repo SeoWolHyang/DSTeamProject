@@ -38,7 +38,7 @@ public class ItemController {
         m.addAttribute("currentPage", page);
         m.addAttribute("totalPage", list.getTotalPages());
 
-        return "";
+        return "list.html";
     }
 
     // 검색
@@ -46,6 +46,8 @@ public class ItemController {
     String searchList(Model m,
                       @PathVariable String searchText,
                       @RequestParam(defaultValue = "1") Integer page){
+
+        System.out.println(searchText);
 
         Page<Item> list = itemRepository.findPageByTitleContains(searchText, PageRequest.of(page -1, 3, Sort.by(Sort.Direction.DESC, "id")));
 
@@ -59,6 +61,6 @@ public class ItemController {
         m.addAttribute("currentPage", page);
         m.addAttribute("totalPage", list.getTotalPages());
 
-        return "";
+        return "search.html";
     }
 }
