@@ -31,6 +31,7 @@ public class ItemController {
             list = itemRepository.findAll(PageRequest.of(page -1, 3, Sort.by(Sort.Direction.DESC, "id")));
         }else{  // 정해진 카테고리가 있다면
             list = itemRepository.findPageByCategory(category, PageRequest.of(page -1, 3, Sort.by(Sort.Direction.DESC, "id")));
+            m.addAttribute("category", category);
         }
         m.addAttribute("items", list.getContent());
         m.addAttribute("hasPrevious", list.hasPrevious());
@@ -42,17 +43,14 @@ public class ItemController {
     }
 
     // 검색
-    @GetMapping("/list/{searchText}")
-    String searchList(Model m,
-                      @PathVariable String searchText,
-                      @RequestParam(defaultValue = "1") Integer page){
-
+    private String processSearchList(Model m, String searchText, Integer page) {
         System.out.println(searchText);
 
-        Page<Item> list = itemRepository.findPageByTitleContains(searchText, PageRequest.of(page -1, 3, Sort.by(Sort.Direction.DESC, "id")));
+        Page<Item> list = itemRepository.findPageByTitleContains(searchText, PageRequest.of(page - 1, 3, Sort.by(Sort.Direction.DESC, "id")));
 
-        if(list.isEmpty())
+        if (list.isEmpty()) {
             m.addAttribute("warningMessage", "검색 결과가 없습니다.");
+        }
 
         m.addAttribute("searchText", searchText);
         m.addAttribute("items", list.getContent());
@@ -62,5 +60,15 @@ public class ItemController {
         m.addAttribute("totalPage", list.getTotalPages());
 
         return "search.html";
+    }
+
+    @PostMapping("/list/{searchText}")
+    public String searchListPost(Model m, @PathVariable String searchText, @RequestParam(defaultValue = "1") Integer page) {
+        return processSearchList(m, searchText, page);
+    }
+
+    @GetMapping("/list/{searchText}")
+    public String searchListGet(Model m, @PathVariable String searchText, @RequestParam(defaultValue = "1") Integer page) {
+        return processSearchList(m, searchText, page);
     }
 }
