@@ -1,5 +1,6 @@
 package com.SecondHand.item;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Data
 public class Item {
 
@@ -17,7 +19,7 @@ public class Item {
     private String title;   // 상품명
     private Integer price;  // 가격
     private String imgURL;  // 이미지
-    private String desc;    // 설명
+    private String itemDesc;    // 설명
 
     private String category;    // 카테고리
 
