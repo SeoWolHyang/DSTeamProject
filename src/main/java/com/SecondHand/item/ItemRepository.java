@@ -21,8 +21,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(value="select * from item where match(title) against(?1) order by id desc", nativeQuery = true)
     List<Item> searchByTitle(String title);
 
+    @Query(value="select * from item where title like %:searchText%", nativeQuery = true)
+    Page<Item> findPageByTitleContains(@Param("searchText") String searchText, Pageable page);
+
     // 페이징 처리용
     Page<Item> findAll(Pageable page);
     Page<Item> findPageByCategory(String category, Pageable page);
-    Page<Item> findPageBySearchText(String search, Pageable page);
 }
