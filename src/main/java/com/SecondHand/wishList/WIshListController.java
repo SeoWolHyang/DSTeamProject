@@ -21,6 +21,17 @@ public class WIshListController {
     private final UserRepository userRepository;
 
     // 찜하기
+    /*
+    <form action="/wishlist/add" method="post">
+        <input name="itemId" th:value="${item.id}" style="display:none">
+        <input name="itemTitle" th:value="${item.title}" style="display:none">
+        <input name="itemImgURL" th:value="${item.imgURL}" style="display:none">
+        <input name="itemPrice" th:value="${item.price}" style="display:none">
+        <input name="itemUploadedDate" th:value="${item.uploadDate}" style="display:none">
+        <button type="submit">찜하기</button>
+    </form>
+     */
+
     @PostMapping("/add")
     String addList(Long itemId,
                    String itemTitle,
@@ -57,6 +68,20 @@ public class WIshListController {
     }
 
     // 찜 목록 삭제하기
+
+    /*
+        <div th:each="wl : ${wishlist}">
+            <h4 th:text="${wl.itemTitle}"></h4>
+            <span th:onclick="fetch('/wishlist/delete/[[${wl.id}]]', {method: 'DELETE'})  // id를 경로 변수로 사용
+                        .then(r => r.text())
+                        .then(() => {
+                            location.reload();
+                        })">
+            Delete
+            </span>
+        </div>
+    */
+
     @DeleteMapping("/delete/{id}")
     ResponseEntity<String> deleteFromList(@PathVariable Long id){
         wishListRepository.deleteById(id);
