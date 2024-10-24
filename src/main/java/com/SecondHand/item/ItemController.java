@@ -71,4 +71,8 @@ public class ItemController {
     public String searchListGet(Model m, @PathVariable String searchText, @RequestParam(defaultValue = "1") Integer page) {
         return processSearchList(m, searchText, page);
     }
+
+    public String test(){
+        return null;
+    }
 }
