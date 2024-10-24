@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>wishlist</title>
+</head>
+<body>
+  <div th:each="wl : ${wishlist}">
+    <h4 th:text="${wl.itemTitle}"></h4>
+    <span th:onclick="fetch('/wishlist/delete/[[${wl.id}]]', {method: 'DELETE'})
+                .then(r => r.text())
+                .then(() => {
+                    location.reload();
+    })">삭제</span>
+  </div>
+</body>
+</html>

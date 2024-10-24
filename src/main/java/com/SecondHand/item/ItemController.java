@@ -20,6 +20,12 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final ItemService itemService;
 
+    @GetMapping("/")
+    String index(){
+
+        return "redirect:/list";
+    }
+
     // 목록
     @GetMapping("/list")
     String categoryList(Model m,
